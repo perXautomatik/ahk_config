@@ -5,7 +5,8 @@
 ; Tested to work on Lenovo X1 Yoga, Gen. 4 
 
 #SingleInstance Force
-#Persistent 
+#Persistent
+#InstallKeybdHook
 
 GLOBAL_DEBUG_MODE := 0
 Return
@@ -40,18 +41,27 @@ Return
   process_windows := GetWindowsOfProcess(process_name)
   
   n_process_windows := process_windows.Length()
-  
   index := 1 ; AHK arrays are 1 indexed
-  While(GetKeyState("Alt", "P")) {
-    If (GetKeyState("``", "P")) {
+  While (GetKeyState("Alt", "P")) {
+    If (GetKeyState("LShift", "P") && GetKeyState("``", "P")) {
+      ; MsgBox here
+      If (index == 1) {
+        index := n_process_windows
+      } Else {
+        index := index - 1
+      }
+    } Else If (GetKeyState("``", "P")) {
       If (index < n_process_windows) {
         index := index + 1
       } Else {
         index := 1
       }
-      active_id := process_windows[index]
-      WinActivate, ahk_id %active_id%
+    } Else {
+      Continue
     }
+    ; MsgBox %index%
+    active_id := process_windows[index]
+    WinActivate, ahk_id %active_id%
   }
   index := ""
   process_windows := ""
