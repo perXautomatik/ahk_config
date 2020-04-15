@@ -7,7 +7,7 @@
 #SingleInstance Force
 #Persistent 
 
-GLOBAL_DEBUG_MODE := 0
+GLOBAL_DEBUG_MODE := 1
 Return
 
 CapsLock::Ctrl
@@ -19,8 +19,8 @@ LCtrl::Return
 
 #c::
   If(GLOBAL_DEBUG_MODE > 0) {
-    ; WinGetClass, title, A
-    WinGetActiveTitle, title
+    WinGetClass, title, A
+    ; WinGetActiveTitle, title
     MsgBox %title%    
   }
 Return
@@ -98,7 +98,7 @@ GetSelectedText() {
   }
 Return
 
-; Start the timer on the selected item in the daily view
+; Start the timer on the selected item
 #IfWinActive ahk_class WindowsForms10.Window.8.app.0.262fb3d
   >+s::
     WinGetActiveTitle, active_title    
@@ -146,11 +146,20 @@ DTEAppContextClick(item_position, initial_mouse) {
   PrintScreen::AppsKey
 Return
 
+; dismiss the outlook reminder popup
+#d::  
+  ; WinActivate, ahk_class #32770
+  reminder_window := WinExist("ahk_class #32770")
+  MsgBox %reminder_window%
+  ; Send !d
+  ; Sleep, 10
+  ; Send {Enter}
+Return
+
 ; This ridiculous keymapping is care of Lenovo
 ; which maps F12 to some bloatware keyboard manager utility
 #If WinActive("ahk_class OpusApp") || WinActive("ahk_class XLMAIN")
-  F12::
-    Send {F12}
+  F12::Send {F12}
 Return
 
 
