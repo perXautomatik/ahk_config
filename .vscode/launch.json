@@ -8,8 +8,9 @@
             "type": "ahk",
             "request": "launch",
             "name": "AutoHotkey Debugger",
-            "program": "${file}",
+            "program": "D:\\PortableApps\\4, windows enhance\\PortableApps\\AutoHotkeyPortable\\App\\AutoHotkey\\AutoHotkeyU64.exe",
             "stopOnEntry": true
         }
+
     ]
 }
